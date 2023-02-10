@@ -3,8 +3,10 @@ import './assets/css/app.css'
 
 import router from './router'
 import {createPinia} from "pinia";
+// import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 
 const pinia = createPinia()
+// pinia.use(piniaPluginPersistedstate)
 
 import App from './App.vue'
 import {useGlobalStore} from "./stores/globalStore";

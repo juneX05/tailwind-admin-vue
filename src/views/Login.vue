@@ -104,10 +104,10 @@ const submit = () => {
               />
               <span class="line-clamp-1">Remember me</span>
             </label>
-            <a
-                href="#"
+            <router-link
+                :to="{ name:'forgot-password' }"
                 class="text-xs text-slate-400 transition-colors line-clamp-1 hover:text-slate-800 focus:text-slate-800 dark:text-navy-300 dark:hover:text-navy-100 dark:focus:text-navy-100"
-            >Forgot Password?</a
+            >Forgot Password?</router-link
             >
           </div>
           <button
@@ -117,7 +117,7 @@ const submit = () => {
           </button>
           <div class="mt-4 text-center text-xs+">
             <p class="line-clamp-1">
-              <span>Dont have Account?</span>
+              <span>Dont have Account? </span>
 
               <a
                   class="text-primary transition-colors hover:text-primary-focus dark:text-accent-light dark:hover:text-accent"

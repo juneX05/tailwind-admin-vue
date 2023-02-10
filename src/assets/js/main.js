@@ -183,53 +183,13 @@ export default class Main {
 
   _uiInit() {
 
-    this._uiInitDarkModeBtn();
-
-    this._uiInitNotification();
-
-    this._uiInitNotificationTab();
+    // this._uiInitDarkModeBtn();
+    //
+    // this._uiInitNotification();
+    //
+    // this._uiInitNotificationTab();
 
   }
 
-
-  _uiInitDarkModeBtn() {
-    const toggleBtns = document.querySelectorAll(
-      `.${DARKMODE_TOGGLE_BTN_CLASS}`
-    );
-
-    toggleBtns.forEach((node) => {
-      node.addEventListener("click", () => $darkmode.toggle());
-    });
-  }
-
-  _uiInitNotification() {
-    if (!document.querySelector(`#${NOTIFICATION_WRAPPER_ID}`)) return;
-
-    const config = {
-      placement: "bottom-end",
-      modifiers: [
-        {
-          name: "offset",
-          options: {
-            offset: [0, 12],
-          },
-        },
-      ],
-    };
-
-    this.popperNotification = new Popper(
-      `#${NOTIFICATION_WRAPPER_ID}`,
-      `#${NOTIFICATION_REF_ID}`,
-      `#${NOTIFICATION_BOX_ID}`,
-      config
-    );
-  }
-
-  _uiInitNotificationTab() {
-    const tabWrapper = document.querySelector(`.${NOTIFICATION_TAB_CLASS}`);
-    if (tabWrapper) {
-      this.notificationTab = new Tab(tabWrapper);
-    }
-  }
 
 }

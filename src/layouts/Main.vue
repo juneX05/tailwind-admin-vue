@@ -184,6 +184,12 @@ const uiInitSidebarNav = () => {
     } else {
       node.classList.add(...defaultClass);
     }
+
+    node.addEventListener("click", () => {
+      if ($breakpoint.mdAndUp !== true) {
+        return uiCloseSidebar()
+      }
+    })
   });
 
   new Accordion(`.${SIDEBAR_NAV_WRAPPER}`, {

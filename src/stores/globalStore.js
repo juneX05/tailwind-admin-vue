@@ -1,9 +1,13 @@
 import {defineStore} from "pinia";
+import icons from "../data/icons";
+import menus from  "../data/menus"
 
 export const useGlobalStore = defineStore("globalStore", {
     state: () => {
         return {
-            preloader: true
+            preloader: true,
+            menus: menus,
+            icons: icons
         }
     },
     actions: {
@@ -15,4 +19,5 @@ export const useGlobalStore = defineStore("globalStore", {
             this.preloader = false;
         },
     },
+    persist: true
 })

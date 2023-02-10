@@ -1,13 +1,36 @@
 <template>
   <!-- Left: Sidebar Toggle Button -->
-  <div class="h-7 w-7">
-    <button @click = "uiToggleSidebar"
-        class="sidebar-toggle ml-0.5 flex h-7 w-7 flex-col justify-center space-y-1.5 text-primary outline-none focus:outline-none dark:text-accent-light/80"
+  <div class="flex items-center space-x-5">
+    <div class="ml-1 h-7 w-7">
+      <button @click = "uiToggleSidebar"
+          class="sidebar-toggle ml-0.5 flex h-7 w-7 flex-col justify-center space-y-1.5 text-primary outline-none focus:outline-none dark:text-accent-light/80"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div
+        data-toggle="drawer"
+        data-target="#chat-detail"
+        class="flex cursor-pointer items-center space-x-4 font-inter"
     >
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
+      <div class="avatar">
+        <img
+            class="rounded-full"
+            src="/src/assets/images/200x200.png"
+            alt="avatar"
+        />
+      </div>
+      <div>
+        <p
+            class="font-medium text-slate-700 line-clamp-1 dark:text-navy-100"
+        >
+          Konnor Guzman
+        </p>
+        <p class="mt-0.5 text-xs">Last seen recently</p>
+      </div>
+    </div>
   </div>
 
   <!-- Right: Header buttons -->
