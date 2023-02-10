@@ -1,0 +1,21 @@
+
+/* @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"); */
+@import './base.css';
+@import './components.css';
+@import './pages.css';
+@import './fontawesome-all.css';
+
+@tailwind base;
+/* @import "/src/assets/css/base.css"; */
+
+@tailwind components;
+/* @import "/src/assets/css/components.css"; */
+
+@tailwind utilities;
+
+/* @import "/src/assets/css/pages.css"; */
+
+/*@import "~highlight.js/styles/atom-one-dark.css"; !* Just for demo purpose only for highlighting code *!*/
+
+/* @import "/src/assets/css/fontawesome-all.css";  */
+
