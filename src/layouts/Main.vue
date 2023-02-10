@@ -186,7 +186,7 @@ const uiInitSidebarNav = () => {
     }
 
     node.addEventListener("click", () => {
-      if ($breakpoint.mdAndUp !== true) {
+      if (!$breakpoint.xlAndUp) {
         return uiCloseSidebar()
       }
     })
