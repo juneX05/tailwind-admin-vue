@@ -14,23 +14,6 @@ const count = ref(0)
 const submit = () => {
   router.push({name: 'dashboard'})
 }
-
-const PRELOADER_CLASS = "app-preloader";
-
-const removeAppPreloader = () => {
-  const preloader = document.querySelector(`.${PRELOADER_CLASS}`);
-
-  if (!preloader) return;
-
-  setTimeout(() => {
-    preloader.classList.add(
-        "animate-[var(--ease-in-out)_fade-out_500ms_forwards]"
-    );
-    setTimeout(() => preloader.remove(), 1000);
-  }, 300);
-}
-
-removeAppPreloader();
 </script>
 
 <template>

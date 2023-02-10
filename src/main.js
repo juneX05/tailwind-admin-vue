@@ -1,10 +1,28 @@
-import { createApp } from 'vue'
+import {createApp} from 'vue'
 import './assets/css/app.css'
-import App from './App.vue'
 
-// createApp(App).mount('#app')
 import router from './router'
+import {createPinia} from "pinia";
 
-createApp(App)
-    .use(router)
-    .mount(document.body)
+const pinia = createPinia()
+
+import App from './App.vue'
+import {useGlobalStore} from "./stores/globalStore";
+
+const app = createApp(App)
+app.use(pinia)
+
+app.use(router)
+
+router.beforeEach((to, from) => {
+    const globalStore = useGlobalStore()
+    globalStore.on();
+
+})
+
+router.afterEach((to, from) => {
+    const globalStore = useGlobalStore()
+    setTimeout(() => globalStore.off(), 1000);
+})
+
+app.mount(document.body)

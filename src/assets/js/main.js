@@ -189,7 +189,6 @@ export default class Main {
 
     this._uiInitNotificationTab();
 
-    this._root.classList.remove("cloak");
   }
 
 

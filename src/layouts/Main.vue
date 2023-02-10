@@ -93,22 +93,6 @@ import {useRoute, useRouter} from "vue-router";
 const route = useRoute();
 const router = useRouter();
 
-const PRELOADER_CLASS = "app-preloader";
-
-const removeAppPreloader = () => {
-  const preloader = document.querySelector(`.${PRELOADER_CLASS}`);
-
-  if (!preloader) return;
-
-  setTimeout(() => {
-    preloader.classList.add(
-        "animate-[var(--ease-in-out)_fade-out_500ms_forwards]"
-    );
-    setTimeout(() => preloader.remove(), 1000);
-  }, 300);
-}
-
-
 const SIDEBAR_CLASS = "sidebar";
 const SIDEBAR_OPEN_CLASS = "is-sidebar-open";
 const SIDEBAR_TOGGLE_BTN_CLASS = "sidebar-toggle";
@@ -221,7 +205,6 @@ onMounted(() => {
   uiInitSidebar()
   uiInitSidebarNav()
 
-  removeAppPreloader();
 })
 
 const logout = () => {
