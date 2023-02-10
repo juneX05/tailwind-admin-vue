@@ -1415,7 +1415,7 @@ onMounted(() => {
       >
         <img
             class="rounded-full"
-            src="/assets/images/200x200.png"
+            src="/src/assets/images/200x200.png"
             alt="avatar"
         />
 
