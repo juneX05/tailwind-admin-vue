@@ -40,9 +40,7 @@ let task = reactive({
   assigned: [],
 })
 
-const errors = reactive({
-  title: ''
-})
+const errors = reactive({})
 
 const submit = () => {
   const { data, count } = tasksStore.validator(task);
@@ -50,12 +48,11 @@ const submit = () => {
     errors[item] = data[item]
   })
 
-
   if(count > 0) {
     console.log('TASK', task)
     console.log('MESSAGES',data)
   } else {
-    tasksStore.save()
+    tasksStore.save(task)
   }
 
 }

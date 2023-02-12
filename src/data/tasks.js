@@ -1,7 +1,8 @@
+import {makeId} from "../assets/js/utils/helpers";
 
 const tasks = [
     {
-        id:1,
+        id: 'task-' + makeId(16),
         title: 'Design UI'
         ,description: 'Design UI for Factory App. This will help us in generating required resources for the customers to know what is going to happen'
         ,completed: false
@@ -33,7 +34,7 @@ const tasks = [
         ]
     }
     ,{
-        id:2,
+        id: 'task-' + makeId(16),
         title: 'Unit Testing'
         ,description: 'Dog Tracker APP module register app needs to be tested.'
         ,completed: true
@@ -63,7 +64,7 @@ const tasks = [
     }
     ,{
 
-        id:3,
+        id: 'task-' + makeId(16),
         title: 'API Documentation'
         ,description: 'The API needs to be documented so that to ease the pressure for the frontend developers on how to utilize the system'
         ,completed: true

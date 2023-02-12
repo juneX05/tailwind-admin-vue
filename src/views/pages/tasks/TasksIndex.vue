@@ -155,7 +155,7 @@ const splitDateTime = (date) => {
                 <span>{{ stepsCounter(task.steps) }}</span>
               </div>
             </div>
-            <div class="mt-1 flex items-end justify-between">
+            <div v-if="task.due_date" class="mt-1 flex items-end justify-between">
               <div class="flex flex-wrap items-center font-inter text-xs">
                 <p>{{ splitDateTime(task.due_date).date }}</p>
                 <div
@@ -196,7 +196,7 @@ const splitDateTime = (date) => {
                     class="m-1.5 w-px self-stretch bg-slate-200 dark:bg-navy-500"
                 ></div>
 
-                <div class="badge space-x-2.5 px-1 text-info" v-for="(tag, index) in task.tags">
+                <div v-if="task.tags" class="badge space-x-2.5 px-1 text-info" v-for="(tag, index) in task.tags">
                   <div class="h-2 w-2 rounded-full bg-current"></div>
                   <span>{{ tag }}</span>
                 </div>

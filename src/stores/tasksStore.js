@@ -1,5 +1,6 @@
 import {defineStore} from "pinia";
 import tasks from "../data/tasks";
+import {makeId} from "../assets/js/utils/helpers";
 
 export const useTasksStore = defineStore("tasksStore", {
     state: () => {
@@ -67,6 +68,7 @@ export const useTasksStore = defineStore("tasksStore", {
     actions: {
         // since we rely on `this`, we cannot use an arrow function
         save (data) {
+            data.id = 'task-' + makeId(16)
             this.tasks.push(data)
         },
         off() {
