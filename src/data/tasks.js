@@ -11,10 +11,10 @@ const tasks = [
         ,priority: 'low'
         ,project: null
         ,assigned: [
-            { id: 1, name: 'Jane Doe', profile_pic: '/assets/images/200x200.png'},
+            { id: 1, name: 'Jane Doe', profile_pic: '/src/assets/images/200x200.png'},
             { id: 2, name: 'Joseph Doe', profile_pic: null },
             { id: 3, name: 'Jack Doe', profile_pic: null },
-            { id: 4, name: 'Pete Doe', profile_pic: '/assets/images/200x200.png'},
+            { id: 4, name: 'Pete Doe', profile_pic: '/src/assets/images/200x200.png'},
             { id: 5, name: 'Hansen Doe', profile_pic: null }
         ]
         , steps : [
@@ -43,8 +43,8 @@ const tasks = [
         ,priority: 'high'
         ,project: 'Dog Tracker App'
         ,assigned: [
-            { id: 1, name: 'Jane Doe', profile_pic: '/assets/images/200x200.png'},
-            { id: 4, name: 'Pete Doe', profile_pic: '/assets/images/200x200.png'},
+            { id: 1, name: 'Jane Doe', profile_pic: '/src/assets/images/200x200.png'},
+            { id: 4, name: 'Pete Doe', profile_pic: '/src/assets/images/200x200.png'},
             { id: 5, name: 'Hansen Doe', profile_pic: null }
         ]
         , steps : [
@@ -78,7 +78,7 @@ const tasks = [
         ,assigned: [
             { id: 2, name: 'Joseph Doe', profile_pic: null },
             { id: 3, name: 'Jack Doe', profile_pic: null },
-            { id: 4, name: 'Pete Doe', profile_pic: '/assets/images/200x200.png'},
+            { id: 4, name: 'Pete Doe', profile_pic: '/src/assets/images/200x200.png'},
         ]
         , steps : [
             {title:'Step 1',completed:true}

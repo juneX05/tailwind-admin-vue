@@ -2,7 +2,13 @@
 import Layout from '../../../layouts/Main.vue'
 import { useRoute, useRouter } from 'vue-router';
 import {useTasksStore} from "../../../stores/tasksStore";
-import {onMounted} from "vue";
+import {onMounted, reactive} from "vue";
+import {useGlobalStore} from "../../../stores/globalStore";
+import {useProjectsStore} from "../../../stores/projectsStore";
+import SelectField from "../../../components/inputs/SelectField.vue";
+import InputField from "../../../components/inputs/InputField.vue";
+import SelectAssignUsers from "../../../components/SelectAssignUsers.vue";
+import WYSIWYG from "../../../components/inputs/WYSIWYG.vue";
 
 defineProps({
   msg: String,
@@ -12,149 +18,47 @@ const route = useRoute();
 const router = useRouter();
 
 const tasksStore = useTasksStore()
-
 const tasks = tasksStore.tasks
 
-const submit = () => {
-  router.push({name: 'tasks-index'})
-}
+const userStore = useGlobalStore()
+const users = userStore.users
+const tags = userStore.tags
+
+const projectsStore = useProjectsStore()
+const projects = projectsStore.projects
 
 const init = () => {
 
-  // Post Content (Quill Editor)
-  const configPostConent = {
-    modules: {
-      toolbar: [
-        ["bold", "italic", "underline", "strike"], // toggled buttons
-        ["blockquote", "code-block"],
-        [{header: 1}, {header: 2}], // custom button values
-        [{list: "ordered"}, {list: "bullet"}],
-        [{script: "sub"}, {script: "super"}], // superscript/subscript
-        [{indent: "-1"}, {indent: "+1"}], // outdent/indent
-        [{direction: "rtl"}], // text direction
-        [{size: ["small", false, "large", "huge"]}], // custom dropdown
-        [{header: [1, 2, 3, 4, 5, 6, false]}],
-        [{color: []}, {background: []}], // dropdown with defaults from theme
-        [{font: []}],
-        [{align: []}],
-        ["clean"], // remove formatting button
-      ],
-    },
-    placeholder: "Enter your content...",
-    theme: "snow",
-  };
-
-  const postConentEl = document.querySelector("#postConent");
-  postConentEl._editor = new Quill(postConentEl, configPostConent);
-
-
-  // Post Authors (Tom Select)
-  const configassignUsers = {
-    valueField: "id",
-    searchField: "title",
-    options: [
-      {
-        id: 1,
-        name: "John Doe",
-        job: "Web designer",
-        src: "/src/assets/images/200x200.png",
-      },
-      {
-        id: 2,
-        name: "Emilie Watson",
-        job: "Developer",
-        src: "/src/assets/images/200x200.png",
-      },
-      {
-        id: 3,
-        name: "Nancy Clarke",
-        job: "Software Engineer",
-        src: "/src/assets/images/200x200.png",
-      },
-    ],
-    placeholder: "Select the user",
-    render: {
-      option: function (data, escape) {
-        return `<div class="flex space-x-3">
-                      <div class="avatar w-8 h-8">
-                        <img class="rounded-full" src="${escape(
-            data.src
-        )}" alt="avatar"/>
-                      </div>
-                      <div class="flex flex-col">
-                        <span> ${escape(data.name)}</span>
-                        <span class="text-xs opacity-80"> ${escape(
-            data.job
-        )}</span>
-                      </div>
-                    </div>`;
-      },
-      item: function (data, escape) {
-        return `<span class="badge rounded-full bg-primary dark:bg-accent text-white p-px mr-2">
-                      <span class="avatar w-6 h-6">
-                        <img class="rounded-full" src="${escape(
-            data.src
-        )}" alt="avatar">
-                      </span>
-                      <span class="mx-2">${escape(data.name)}</span>
-                    </span>`;
-      },
-    },
-  };
-  const assignUsersEl = document.querySelector("#assignUsers");
-  assignUsersEl._tom = new Tom(assignUsersEl, configassignUsers);
-
-  // Task Priority (Tom Select)
-  const taskPriorityEl = document.querySelector("#taskPriority");
-  taskPriorityEl._tom = new Tom(taskPriorityEl, {
-    create: false,
-    sortField: {field: "text", direction: "asc"},
-  });
-
-  // Task Project (Tom Select)
-  const taskProjectEl = document.querySelector("#taskProject");
-  taskProjectEl._tom = new Tom(taskProjectEl, {
-    create: false,
-    sortField: {field: "text", direction: "asc"},
-  });
-
-  // Post Tags (Tom Select)
-  const taskTagsEl = document.querySelector("#taskTags");
-  taskTagsEl._tom = new Tom(taskTagsEl, {
-    valueField: "id",
-    labelField: "title",
-    searchField: "title",
-    options: [
-      {
-        id: 1,
-        title: "Update"
-      }
-      ,{
-        id: 2,
-        title: "Development"
-      }
-      ,{
-        id: 3,
-        title: "Design"
-      }
-      ,{
-        id: 4,
-        title: "Testing"
-      }
-    ],});
-
-  // Task Dates (Flatpickr)
-  const taskStartDateEl = document.querySelector("#taskStartDate");
-  taskStartDateEl._datepicker = flatpickr(taskStartDateEl);
-
-  const taskEndDateEl = document.querySelector("#taskEndDate");
-  taskEndDateEl._datepicker = flatpickr(taskEndDateEl);
 }
 
 onMounted( () => {
   init()
 })
 
+let task = reactive({
+  tags: [],
+  assigned: [],
+})
+
+const errors = reactive({
+  title: ''
+})
+
+const submit = () => {
+  const { data, count } = tasksStore.validator(task);
+  Object.keys(data).forEach( (item) => {
+    errors[item] = data[item]
+  })
+
+
+  if(count > 0) {
+    console.log('TASK', task)
+    console.log('MESSAGES',data)
+  } else {
+    tasksStore.save()
+  }
+
+}
 </script>
 
 <template>
@@ -180,6 +84,7 @@ onMounted( () => {
         </div>
         <div class="flex justify-center space-x-2">
           <button
+              @click="submit"
               class="btn min-w-[7rem] bg-primary font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90"
           >
             Save
@@ -192,34 +97,25 @@ onMounted( () => {
             <div class="tabs flex flex-col">
               <div class="p-4 sm:p-5">
                 <div class="space-y-5">
-                  <label class="block">
-                    <span class="font-medium text-slate-600 dark:text-navy-100">Title</span>
-                    <input
-                        class="form-input mt-1.5 w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-                        placeholder="Enter title"
-                        type="text"
-                    />
-                  </label>
-                  <div>
-                    <span
-                        class="font-medium text-slate-600 dark:text-navy-100">Description
-                    </span>
-                    <div class="mt-1.5 w-full">
-                      <div id="postConent" class="h-48"></div>
-                    </div>
-                  </div>
 
-                  <label class="block">
-                    <span class="font-medium text-slate-600 dark:text-navy-100"
-                    >Assign Users
-                    </span
-                    >
-                    <select
-                        multiple
-                        id="assignUsers"
-                        class="mt-1.5 w-full"
-                    ></select>
-                  </label>
+                  <InputField
+                      id="taskTitle"
+                      placeholder="Enter Title."
+                      title="Title"
+                      v-model="task.title"
+                      type="text"
+                      :error="errors.title"
+                  />
+
+                  <WYSIWYG
+                    id="taskDescription"
+                    placeholder="Enter description for the task"
+                    title="Description"
+                    v-model="task.description"
+                    :error="errors.description"
+                  />
+
+                  <SelectAssignUsers v-model="task.assigned" :error="errors.assigned" />
                 </div>
               </div>
             </div>
@@ -227,97 +123,67 @@ onMounted( () => {
         </div>
         <div class="col-span-12 lg:col-span-4">
           <div class="card space-y-5 p-4 sm:p-5">
-            <label class="block">
-              <span class="font-medium text-slate-600 dark:text-navy-100">Priority</span>
-              <select class="mt-1.5 w-full" id="taskPriority">
-                <option value>Select the priority</option>
-                <option value="Low">Low</option>
-                <option value="Medium">Medium</option>
-                <option value="High">High</option>
-              </select>
-            </label>
-            <label class="block">
-              <span class="font-medium text-slate-600 dark:text-navy-100">Project</span>
-              <select class="mt-1.5 w-full" id="taskProject">
-                <option value>Select the project</option>
-                <option value="Mobile App">Mobile App</option>
-                <option value="Flutter Rock">Flutter Rock</option>
-              </select>
-            </label>
-            <label class="block">
-              <span class="font-medium text-slate-600 dark:text-navy-100">Tags</span>
-              <input
-                  id="taskTags"
-                  class="mt-1.5 w-full"
-                  placeholder="Enter Tags"
-              />
-            </label>
 
-            <label>
-              <span class="font-medium text-slate-600 dark:text-navy-100"
-              >Start Date
-              </span
-              >
-              <span class="relative mt-1.5 flex">
-                <input
-                    id="taskStartDate"
-                    class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-                    placeholder="Choose date..."
-                    type="text"
-                />
-                <span
-                    class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent"
-                >
-                  <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="h-5 w-5 transition-colors duration-200"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      stroke-width="1.5"
-                  >
-                    <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                    />
-                  </svg>
-                </span>
-              </span>
-            </label>
+            <SelectField
+                id="taskPriority"
+                label-field="name"
+                :options="[
+                    {id:1, name:'High'},
+                    {id:2, name:'Medium'},
+                    {id:3, name:'Low'},
+                ]"
+                placeholder="Select Priority"
+                search-field="name"
+                title="Priority"
+                value-field="id"
+                v-model="task.priority"
+                :multiple="false"
+                :error="errors.priority"
+            />
 
-            <label>
-              <span class="font-medium text-slate-600 dark:text-navy-100"
-              >End Date
-              </span
-              >
-              <span class="relative mt-1.5 flex">
-                <input
-                    id="taskEndDate"
-                    class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-                    placeholder="Choose date..."
-                    type="text"
-                />
-                <span
-                    class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent"
-                >
-                  <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="h-5 w-5 transition-colors duration-200"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      stroke-width="1.5"
-                  >
-                    <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                    />
-                  </svg>
-                </span>
-              </span>
-            </label>
+            <SelectField
+                id="taskProject"
+                label-field="name"
+                :options="projects"
+                placeholder="Select Project"
+                search-field="name"
+                title="Project"
+                value-field="id"
+                v-model="task.project"
+                :multiple="false"
+            />
+
+            <SelectField
+              id="taskTags"
+              label-field="title"
+              :options="tags"
+              placeholder="Select Tags"
+              search-field="title"
+              title="Tags"
+              value-field="id"
+              v-model="task.tags"
+              :multiple="true"
+            />
+
+            <InputField
+                id="taskStartDate"
+                placeholder="Chose Date..."
+                title="Start Date"
+                v-model="task.start_date"
+                icon="calendar"
+                type="date"
+                :error="errors.start_date"
+            />
+
+            <InputField
+                id="taskEndDate"
+                placeholder="Chose Date..."
+                title="End Date"
+                v-model="task.end_date"
+                icon="calendar"
+                type="date"
+                :error="errors.end_date"
+            />
           </div>
         </div>
       </div>

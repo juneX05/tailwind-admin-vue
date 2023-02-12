@@ -112,12 +112,11 @@ const toggleBtns = document.querySelectorAll(
 
 const uiInitSidebar = () => {
 
-  // checking the existing of the left sidebar
-  if (!SIDEBAR) return;
-
   // Closing the sidebar at the breakponts smaller than "XL"
   if (!$breakpoint.xlAndUp) uiCloseSidebar();
 
+  // checking the existing of the left sidebar
+  // if (!SIDEBAR) return;
 
   console.log(toggleBtns);
   // Declaring the close buttons for sidebar
@@ -125,8 +124,15 @@ const uiInitSidebar = () => {
 
   // Closing the sidebar when breakpoint changed
   window.addEventListener("change:breakpoint", () => {
-    if (BODY.classList.contains(SIDEBAR_OPEN_CLASS))
-      uiCloseSidebar();
+    // if (BODY.classList.contains(SIDEBAR_OPEN_CLASS))
+    //   uiCloseSidebar();
+    if (!$breakpoint.xlAndUp) {
+      console.log('closing')
+      uiCloseSidebar()
+    } else {
+      console.log('opening')
+      uiOpenSidebar()
+    }
   });
 
   toggleBtns.forEach((node) =>
@@ -203,6 +209,11 @@ const uiCloseSidebar = () => {
   BODY.classList.remove(SIDEBAR_OPEN_CLASS);
 }
 
+const uiOpenSidebar = () => {
+  if(!BODY.classList.contains(SIDEBAR_OPEN_CLASS))
+    BODY.classList.add(SIDEBAR_OPEN_CLASS);
+}
+
 const uiToggleSidebar = () => {
   BODY.classList.toggle(SIDEBAR_OPEN_CLASS);
 }
@@ -210,7 +221,6 @@ const uiToggleSidebar = () => {
 onMounted(() => {
   uiInitSidebar()
   uiInitSidebarNav()
-
 })
 
 const logout = () => {

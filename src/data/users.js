@@ -3,27 +3,82 @@ const users = [
     {
         id:1
         ,name: 'Jane Doe'
-        ,position: 'Software Developer'
+        ,email: 'janedoe@gmail.com'
+        ,position: 'Developer'
+        ,src: "/src/assets/images/200x200.png"
+        ,password: "password"
     }
     , {
         id:2
         ,name: 'John Doe'
-        ,position: 'Accountant'
+        ,email: 'johndoe@gmail.com'
+        ,position: 'Web Designer'
+        ,src: "/src/assets/images/200x200.png"
+        ,password: "password"
     }
     , {
         id:3
         ,name: 'Jack Doe'
-        ,position: 'Customer Service'
+        ,email: 'jackdoe@gmail.com'
+        ,position: 'App Designer'
+        ,src: "/src/assets/images/200x200.png"
+        ,password: "password"
     }
     , {
         id:4
         ,name: 'Hansen Doe'
-        ,position: 'Manager'
+        ,email: 'hansendoe@gmail.com'
+        ,position: 'Developer'
+        ,src: "/src/assets/images/200x200.png"
+        ,password: "password"
     }
     , {
         id:5
         ,name: 'Pete Doe'
-        ,position: 'IT Consultant'
+        ,email: 'petedoe@gmail.com'
+        ,position: 'App Designer'
+        ,src: "/src/assets/images/200x200.png"
+        ,password: "password"
+    }
+    , {
+        id:6
+        ,name: 'Harlem Doe'
+        ,email: 'harlemdoe@gmail.com'
+        ,position: 'Web Testing'
+        ,src: "/src/assets/images/200x200.png"
+        ,password: "password"
+    }
+    , {
+        id:7
+        ,name: 'Junior Doe'
+        ,email: 'juniordoe@gmail.com'
+        ,position: 'App Testing'
+        ,src: "/src/assets/images/200x200.png"
+        ,password: "password"
+    }
+    , {
+        id:8
+        ,name: 'Freelan Doe'
+        ,email: 'freelandoe@gmail.com'
+        ,position: 'Software Documentation'
+        ,src: "/src/assets/images/200x200.png"
+        ,password: "password"
+    }
+    , {
+        id:9
+        ,name: 'Jacob Doe'
+        ,email: 'jacobdoe@gmail.com'
+        ,position: 'Software Documentation'
+        ,src: "/src/assets/images/200x200.png"
+        ,password: "password"
+    }
+    , {
+        id:10
+        ,name: 'Limion Doe'
+        ,email: 'limiondoe@gmail.com'
+        ,position: 'Web Designer'
+        ,src: "/src/assets/images/200x200.png"
+        ,password: "password"
     }
 ]
 
